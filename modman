@@ -1,0 +1,6 @@
+app/code/community/Spryng/Payment                           app/code/community/Spryng/Payment
+app/etc/modules/Spryng_Payment.xml                          app/etc/modules/Spryng_Payment.xml
+app/locale/en_US/en_US.csv                                  app/locale/en_US/en_US.csv
+app/design/frontend/base/default/layout/spryng_payment.xml  app/design/frontend/base/default/layout/spryng_payment.xml
+app/design/frontend/base/default/template/spryng/           app/design/frontend/base/default/template/spryng/
+lib/spryng/                                                 lib/spryng/

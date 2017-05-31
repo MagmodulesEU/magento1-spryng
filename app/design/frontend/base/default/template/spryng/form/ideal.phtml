@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © 2017 Magmodules.eu. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+$_code = $this->getMethodCode();
+$_issuers = Mage::helper('spryng')->getIdealIssuers();
+?>
+<ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+    <li>
+        <label for="<?php echo $_code ?>_issuer_id" class="required"><em>*</em><?php echo $this->__('Select your bank:') ?>
+        </label>
+        <span class="input-box">
+            <select name="payment[issuer_id]" class="required-entry input-text" id="<?php echo $_code; ?>_issuer_id" title="<?php echo $_code ?>_issuer_id">
+                <?php foreach ($_issuers as $issuer) { ?>
+                    <?php if (isset($issuer['id']) && isset($issuer['id'])) { ?>
+                        <option value="<?php echo $issuer['id'] ?>"><?php echo $issuer['name'] ?></option>
+                    <?php } ?>
+                <?php } ?>
+            </select>
+        </span>
+    </li>
+</ul>

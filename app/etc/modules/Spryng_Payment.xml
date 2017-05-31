@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © 2017 Magmodules.eu. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<config>
+    <modules>
+        <Spryng_Payment>
+            <codePool>community</codePool>
+            <active>true</active>
+        </Spryng_Payment>
+    </modules>
+</config>

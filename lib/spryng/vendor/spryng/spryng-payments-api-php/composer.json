@@ -1,0 +1,22 @@
+{
+    "name": "spryng/spryng-payments-api-php",
+    "description": "A PHP interface to the Spryng Payments platform",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Complexity",
+            "email": "contact@roemerbakker.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "SpryngPaymentsApiPhp\\": "src/Complexity/SpryngPaymentsApiPhp/"
+        }
+    }
+}

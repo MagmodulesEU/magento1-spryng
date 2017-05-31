@@ -1,0 +1,99 @@
+<script type="text/javascript">
+    Payment.prototype.save = Payment.prototype.save.wrap(function (save) {
+
+        var validator = new Validation(this.form);
+
+        if (this.validate() && validator.validate()) {
+
+            var methodCode = this.currentMethod;
+
+            if (methodCode == 'spryng_creditcard') {
+                var requestToken = true;
+                var cardToken = $(methodCode + '_card_token').getValue();
+                var spryngOrganisation = '<?php echo Mage::helper('spryng')->getOrganisation('spryng_creditcard'); ?>';
+                var spryngAccount = '<?php echo Mage::helper('spryng')->getOrganisation('spryng_creditcard'); ?>';
+                var spryngApiEndpoint = '<?php echo Mage::helper('spryng')->getApiEndpoint('card'); ?>';
+            } else if (methodCode == 'spryng_bancontact') {
+                var requestToken = true;
+                var cardToken = $(methodCode + '_card_token').getValue();
+                var spryngOrganisation = '<?php echo Mage::helper('spryng')->getOrganisation('spryng_bancontact'); ?>';
+                var spryngAccount = '<?php echo Mage::helper('spryng')->getOrganisation('spryng_bancontact'); ?>';
+                var spryngApiEndpoint = '<?php echo Mage::helper('spryng')->getApiEndpoint('card'); ?>';
+            } else {
+                var requestToken = false;
+                var cardToken = '';
+            }
+
+            if (requestToken && (0 === cardToken.length)) {
+
+                $(methodCode + '_card_token').setValue('');
+                $(methodCode + '_cc_number').disable();
+                $(methodCode + '_expiration').disable();
+                $(methodCode + '_expiration_yr').disable();
+                $(methodCode + '_cc_cid').disable();
+
+                var callSuccess = function (res) {
+                    $(methodCode + '_card_token').setValue(res._id);
+                    $(methodCode + '_cc_number').setValue('');
+                    $(methodCode + '_expiration').setValue('');
+                    $(methodCode + '_expiration_yr').setValue('');
+                    $(methodCode + '_cc_cid').setValue('');
+
+                    $(methodCode + '_cc_number').enable();
+                    $(methodCode + '_expiration').enable();
+                    $(methodCode + '_expiration_yr').enable();
+                    $(methodCode + '_cc_cid').enable();
+
+                    if (res._id) {
+                        save();
+                    } else {
+                        alert(Translator.translate('Error in processing data, please try again').stripTags());
+                        return false;
+                    }
+                };
+
+                var callError = function (res) {
+                    $(methodCode + '_cc_number').enable();
+                    $(methodCode + '_expiration').enable();
+                    $(methodCode + '_expiration_yr').enable();
+                    $(methodCode + '_cc_cid').enable();
+
+                    alert(Translator.translate('Error in request, please try again').stripTags());
+                    return false;
+                };
+
+                var data =
+                    {
+                        card_number: $(methodCode + '_cc_number').getValue(),
+                        expiry_month: $(methodCode + '_expiration').getValue(),
+                        expiry_year: $(methodCode + '_expiration_yr').getValue(),
+                        cvv: $(methodCode + '_cc_cid').getValue(),
+                        organisation: spryngOrganisation,
+                        account: spryngAccount
+                    };
+
+                // Prototypejs request
+                /*
+                 new Ajax.Request(spryngApiEndpoint, {
+                 method: 'POST',
+                 parameters:data,
+                 success: callSuccess,
+                 error: callError
+                 });
+                 */
+
+                // jQuery request
+                $j.ajax({
+                    url: spryngApiEndpoint,
+                    method: "POST",
+                    data: data,
+                    success: callSuccess,
+                    error: callError
+                });
+
+            } else {
+                save();
+            }
+        }
+    });
+</script>
