@@ -138,6 +138,7 @@ class Spryng_Payment_Model_Klarna extends Spryng_Payment_Model_Spryng
      */
     public function assignData($data)
     {
+
         if (!($data instanceof Varien_Object)) {
             $data = new Varien_Object($data);
         }
@@ -150,8 +151,9 @@ class Spryng_Payment_Model_Klarna extends Spryng_Payment_Model_Spryng
             $this->getInfoInstance()->setAdditionalInformation('pclass', $data->getData('pclass'));
         }
 
-        if ($data->getData('dob')) {
-            $this->getInfoInstance()->setAdditionalInformation('dob', $data->getData('dob'));
+        if ($data->getData('day') && $data->getData('month') && $data->getData('year')) {
+            $dob = $data->getData('year') . '-' . $data->getData('month') . '-' . $data->getData('day');
+            $this->getInfoInstance()->setAdditionalInformation('dob', $dob);
         }
     }
 }

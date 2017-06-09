@@ -35,7 +35,7 @@ $_dob = $this->getLayout()->createBlock('customer/widget_dob');
         echo $_dob->setDate($this->getQuote()
             ->getCustomerDob())
             ->setFieldIdFormat($_code . ':%s')
-            ->setFieldNameFormat($_code . '[%s]')
+            ->setFieldNameFormat('payment[%s]')
             ->toHtml();
         ?>
     </li>
