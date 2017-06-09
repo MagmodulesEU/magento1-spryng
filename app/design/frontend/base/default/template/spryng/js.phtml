@@ -33,7 +33,10 @@
                 $(methodCode + '_cc_cid').disable();
 
                 var callSuccess = function (res) {
-                    $(methodCode + '_card_token').setValue(res._id);
+
+                    var response = window.JSON.parse(res.responseText);
+
+                    $(methodCode + '_card_token').setValue(response._id);
                     $(methodCode + '_cc_number').setValue('');
                     $(methodCode + '_expiration').setValue('');
                     $(methodCode + '_expiration_yr').setValue('');
@@ -44,7 +47,7 @@
                     $(methodCode + '_expiration_yr').enable();
                     $(methodCode + '_cc_cid').enable();
 
-                    if (res._id) {
+                    if (response._id) {
                         save();
                     } else {
                         alert(Translator.translate('Error in processing data, please try again').stripTags());
@@ -62,6 +65,17 @@
                     return false;
                 };
 
+                var setRequestHeaders = function (res) {
+                    var t = res.transport;
+                    t.setRequestHeader = t.setRequestHeader.wrap(function (original, k, v) {
+                        if (/^(accept|accept-language|content-language)$/i.test(k))
+                            return original(k, v);
+                        if (/^content-type$/i.test(k) &&
+                            /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v))
+                            return original(k, v);
+                    });
+                };
+
                 var data =
                     {
                         card_number: $(methodCode + '_cc_number').getValue(),
@@ -72,23 +86,12 @@
                         account: spryngAccount
                     };
 
-                // Prototypejs request
-                /*
-                 new Ajax.Request(spryngApiEndpoint, {
-                 method: 'POST',
-                 parameters:data,
-                 success: callSuccess,
-                 error: callError
-                 });
-                 */
-
-                // jQuery request
-                $j.ajax({
-                    url: spryngApiEndpoint,
-                    method: "POST",
-                    data: data,
-                    success: callSuccess,
-                    error: callError
+                new Ajax.Request(spryngApiEndpoint, {
+                    method: 'POST',
+                    parameters: data,
+                    onSuccess: callSuccess,
+                    onFailure: callError,
+                    onCreate: setRequestHeaders
                 });
 
             } else {
