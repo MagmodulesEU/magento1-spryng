@@ -7,6 +7,7 @@
 $_code = $this->getMethodCode();
 $_prefixes = Mage::helper('spryng')->getCustomerPrefixes();
 $_paymentClasses = Mage::helper('spryng')->getPaymentClasses($_code);
+$_dob = $this->getLayout()->createBlock('customer/widget_dob');
 ?>
 <ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
     <li>
@@ -30,10 +31,12 @@ $_paymentClasses = Mage::helper('spryng')->getPaymentClasses($_code);
         </span>
     </li>
     <li>
-        <label for="<?php echo $_code ?>_dob" class="required"><em>*</em><?php echo $this->__('Date of Birth (DD/MM/YYYY)') ?>
-        </label>
-        <div class="input-box">
-            <input type="text" id="<?php echo $_code ?>_dob" name="payment[dob]" title="<?php echo $this->__('Date of Birth') ?>" value="" class="input-text required-entry"/>
-        </div>
+        <?php
+        echo $_dob->setDate($this->getQuote()
+            ->getCustomerDob())
+            ->setFieldIdFormat($_code . ':%s')
+            ->setFieldNameFormat($_code . '[%s]')
+            ->toHtml();
+        ?>
     </li>
 </ul>
