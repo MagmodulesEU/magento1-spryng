@@ -248,7 +248,7 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
     public function loadSpryngApi($apiKey, $storeId)
     {
         try {
-            require_once(Mage::getBaseDir('lib') . DS . 'spryng' . DS . 'vendor' . DS . 'autoload.php');
+            require_once(Mage::getBaseDir('lib') . DS . 'spryng' . DS . 'autoload.php');
             $spryngApi = new \SpryngPaymentsApiPhp\Client($apiKey, $this->spryngHelper->isSandbox($storeId));
         } catch (\Exception $e) {
             $this->spryngHelper->addTolog('error', 'Function: loadSpryngApi: ' . $e->getMessage());
