@@ -86,8 +86,8 @@ class Spryng_Payment_Model_Klarna extends Spryng_Payment_Model_Spryng
 
         foreach ($order->getAllVisibleItems() as $item) {
             $good = new \SpryngPaymentsApiPhp\Object\Good();
-            $good->title = preg_replace("/[^a-zA-Z0-9]+/", "", $item->getName());
-            $good->reference = preg_replace("/[^a-zA-Z0-9]+/", "", $item->getSku());
+            $good->title = preg_replace("/[^a-zA-Z0-9 ]+/", "", $item->getName());
+            $good->reference = preg_replace("/[^a-zA-Z0-9 ]+/", "", $item->getSku());
             $good->quantity = round($item->getQtyOrdered());
             $good->price = ($item->getPriceInclTax() * 100);
 

@@ -1,0 +1,3 @@
+[submodule "lib/spryng"]
+	path = lib/spryng
+	url = https://github.com/spryngpayments/php.git
