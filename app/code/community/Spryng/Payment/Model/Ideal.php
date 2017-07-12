@@ -10,6 +10,7 @@ class Spryng_Payment_Model_Ideal extends Spryng_Payment_Model_Spryng
     protected $_code = 'spryng_ideal';
     protected $_formBlockType = 'spryng/payment_ideal_form';
     protected $_infoBlockType = 'spryng/payment_ideal_info';
+    protected $_canRefund = true;
 
     /**
      * @param Mage_Sales_Model_Order $order
@@ -54,6 +55,41 @@ class Spryng_Payment_Model_Ideal extends Spryng_Payment_Model_Spryng
         $order->save();
 
         return array('success' => true, 'approval_url' => $approvalUrl);
+    }
+
+    /**
+     * @param Varien_Object $payment
+     * @param float         $amount
+     *
+     * @return $this
+     */
+    public function refund(Varien_Object $payment, $amount)
+    {
+        $order = $payment->getOrder();
+        $storeId = $order->getStoreId();
+        $transactionId = $order->getSpryngTransactionId();
+        if (empty($transactionId)) {
+            $msg = array('error' => true, 'msg' => $this->spryngHelper->__('Transaction ID not found'));
+            $this->spryngHelper->addTolog('error', $msg);
+            return $this;
+        }
+
+        $apiKey = $this->spryngHelper->getApiKey($storeId);
+        if (empty($apiKey)) {
+            $msg = array('error' => true, 'msg' => $this->spryngHelper->__('Api key not found'));
+            $this->spryngHelper->addTolog('error', $msg);
+            return $this;
+        }
+
+        $spryngApi = $this->loadSpryngApi($apiKey, $storeId);
+        try {
+            $amount = $amount * 100;
+            $spryngApi->transaction->refund($transactionId, $amount, '');
+        } catch (\Exception $e) {
+            $this->spryngHelper->addTolog('error', $e->getMessage());
+        }
+
+        return $this;
     }
 
     /**

@@ -64,21 +64,21 @@ class Spryng_Payment_Model_Creditcard extends Spryng_Payment_Model_Spryng
         $storeId = $order->getStoreId();
         $transactionId = $order->getSpryngTransactionId();
         if (empty($transactionId)) {
-            $msg = array('error' => true, 'msg' => __('Transaction ID not found'));
+            $msg = array('error' => true, 'msg' => $this->spryngHelper->__('Transaction ID not found'));
             $this->spryngHelper->addTolog('error', $msg);
             return $this;
         }
 
         $apiKey = $this->spryngHelper->getApiKey($storeId);
         if (empty($apiKey)) {
-            $msg = array('error' => true, 'msg' => __('Api key not found'));
+            $msg = array('error' => true, 'msg' => $this->spryngHelper->__('Api key not found'));
             $this->spryngHelper->addTolog('error', $msg);
             return $this;
         }
 
         $spryngApi = $this->loadSpryngApi($apiKey, $storeId);
         try {
-            $amount = (int)$amount * 100;
+            $amount = $amount * 100;
             $spryngApi->transaction->refund($transactionId, $amount, '');
         } catch (\Exception $e) {
             $this->spryngHelper->addTolog('error', $e->getMessage());
