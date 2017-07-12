@@ -30,15 +30,16 @@ class Spryng_Payment_Model_Creditcard extends Spryng_Payment_Model_Spryng
         }
 
         $paymentData = array(
-            'account'            => $accountId,
-            'amount'             => ($order->getBaseGrandTotal() * 100),
-            'card'               => $cardToken,
-            'dynamic_descriptor' => $this->spryngHelper->getDynamicDescriptor($incrementId, $storeId),
-            'payment_product'    => 'card',
-            'customer_ip'        => $order->getRemoteIp(),
-            'user_agent'         => $this->spryngHelper->getUserAgent(),
-            'capture'            => true,
-            'merchant_reference' => $this->spryngHelper->getMerchantReference($storeId)
+            'account'                    => $accountId,
+            'amount'                     => ($order->getBaseGrandTotal() * 100),
+            'card'                       => $cardToken,
+            'dynamic_descriptor'         => $this->spryngHelper->getDynamicDescriptor($incrementId, $storeId),
+            'payment_product'            => 'card',
+            'customer_ip'                => $order->getRemoteIp(),
+            'user_agent'                 => $this->spryngHelper->getUserAgent(),
+            'capture'                    => true,
+            'merchant_reference'         => $this->spryngHelper->getMerchantReference($storeId),
+            'webhook_transaction_update' => $this->spryngHelper->getWebhookUrl(),
         );
 
         $this->spryngHelper->addTolog('request', $paymentData);
