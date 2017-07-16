@@ -79,8 +79,8 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
         $statusPending = $this->spryngHelper->getStatusPending($storeId);
 
         switch ($transaction->status) {
+            case 'SETTLEMENT_REQUESTED':
             case 'SETTLEMENT_COMPLETED':
-
                 $payment = $order->getPayment();
 
                 if (!$payment->getIsTransactionClosed() && $type == 'webhook') {
@@ -101,31 +101,6 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
                         $invoice->sendEmail();
                         $invoice->save();
                     }
-                }
-
-                $msg = array(
-                    'success'  => true,
-                    'status'   => $transaction->status,
-                    'order_id' => $orderId,
-                    'type'     => $type
-                );
-
-                break;
-
-            case 'SETTLEMENT_REQUESTED':
-                if ($type == 'webhook') {
-                    $message = $this->spryngHelper->__(
-                        'Transaction with ID %s is requested. Your order with ID %s should be updated 
-                        automatically when the status on the payment is updated.',
-                        $transactionId,
-                        $order->getIncrementId()
-                    );
-
-                    if ($statusPending != $order->getStatus()) {
-                        $statusPending = $order->getStatus();
-                    }
-
-                    $order->addStatusToHistory($statusPending, $message, false)->save();
                 }
 
                 $msg = array(
