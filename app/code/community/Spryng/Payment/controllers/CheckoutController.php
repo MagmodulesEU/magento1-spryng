@@ -88,25 +88,29 @@ class Spryng_Payment_CheckoutController extends Mage_Core_Controller_Front_Actio
     {
         $this->spryngHelper = Mage::helper('spryng');
         $this->spryngModel = Mage::getModel('spryng/spryng');
+        $json = json_decode(file_get_contents('php://input'));
 
-        $payload = file_get_contents('php://input');
-        $this->spryngHelper->addTolog('webhook', $payload);
-        $json = json_decode($payload);
+        if (json_last_error() == JSON_ERROR_NONE) {
+            $this->spryngHelper->addTolog('webhook', $json);
+            if ($json && $json->type == 'transaction') {
+                $order = $this->spryngModel->getOrderByTransactionId($json->_id);
+                if (!$order->getEntityId()) {
+                    $msg = array('error' => true, 'msg' => __('No order found for id: %1', $json->_id));
+                    $this->spryngHelper->addTolog('error', $msg);
+                    return;
+                }
 
-        if ($json && $json->type == 'transaction') {
-            $order = $this->spryngModel->getOrderByTransactionId($json->_id);
-            if (!$order->getEntityId()) {
-                $msg = array('error' => true, 'msg' => __('No order found for id: %1', $json->_id));
-                $this->spryngHelper->addTolog('error', $msg);
-                return;
+                $this->spryngModel->processTransaction($order, 'webhook');
             }
 
-            $this->spryngModel->processTransaction($order, 'webhook');
-        }
+            if ($json && $json->type == 'refund') {
+                $storeId = $this->getRequest()->getParams('store_id');
+                if (empty($storeId)) {
+                    $storeId = Mage::app()->getStore()->getStoreId();
+                }
 
-        if ($json && $json->type == 'refund') {
-            $storeId = $this->getRequest()->getParams('store_id');
-            $this->spryngModel->processRefund($json->_id, $storeId, 'webhook');
+                $this->spryngModel->processRefund($json->_id, $storeId, 'webhook');
+            }
         }
     }
 
