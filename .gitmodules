@@ -1,6 +1,9 @@
-[submodule "lib/spryng/php"]
-	path = lib/spryng/php
+[submodule "lib/spryng/vendor/spryng/spryng-payments-api-php"]
+	path = lib/spryng/vendor/spryng/spryng-payments-api-php
 	url = https://github.com/spryngpayments/php.git
-[submodule "lib/spryng/giggsey"]
-	path = lib/spryng/giggsey
+[submodule "lib/spryng/vendor/giggsey/libphonenumber-for-php"]
+	path = lib/spryng/vendor/giggsey/libphonenumber-for-php
 	url = https://github.com/giggsey/libphonenumber-for-php.git
+[submodule "lib/spryng/vendor/giggsey/locale"]
+	path = lib/spryng/vendor/giggsey/locale
+	url = https://github.com/giggsey/Locale.git

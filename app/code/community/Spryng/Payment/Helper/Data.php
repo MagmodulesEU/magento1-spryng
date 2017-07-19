@@ -339,4 +339,16 @@ class Spryng_Payment_Helper_Data extends Mage_Core_Helper_Abstract
             return Mage::getStoreConfig($path, $storeId);
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getAutoloadPath()
+    {
+        $path = Mage::getBaseDir('lib') . '/spryng/vendor/autoload.php';
+        if (file_exists($path)) {
+            return $path;
+        }
+    }
+
 }

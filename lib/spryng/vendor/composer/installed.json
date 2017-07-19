@@ -1,25 +1,25 @@
 [
     {
         "name": "spryng/spryng-payments-api-php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "v1.2",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/spryngpayments/php.git",
-            "reference": "05bedb8f4531b3d6dc65d224f06a7832e1b65cad"
+            "reference": "7583f37e7b86589e5e1a5b0dfb50aa8f11845663"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spryngpayments/php/zipball/05bedb8f4531b3d6dc65d224f06a7832e1b65cad",
-            "reference": "05bedb8f4531b3d6dc65d224f06a7832e1b65cad",
+            "url": "https://api.github.com/repos/spryngpayments/php/zipball/7583f37e7b86589e5e1a5b0dfb50aa8f11845663",
+            "reference": "7583f37e7b86589e5e1a5b0dfb50aa8f11845663",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "^5.5"
         },
-        "time": "2017-03-31 11:09:24",
+        "time": "2017-04-28 09:42:26",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "SpryngPaymentsApiPhp\\": "src/Complexity/SpryngPaymentsApiPhp/"
@@ -39,17 +39,17 @@
     },
     {
         "name": "giggsey/locale",
-        "version": "1.2",
-        "version_normalized": "1.2.0.0",
+        "version": "1.3",
+        "version_normalized": "1.3.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/giggsey/Locale.git",
-            "reference": "640911276e24729c276ea6206a4e0318474d24f5"
+            "reference": "e6eb1883c1452df7734a03fb183a2ec5175c16f2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/giggsey/Locale/zipball/640911276e24729c276ea6206a4e0318474d24f5",
-            "reference": "640911276e24729c276ea6206a4e0318474d24f5",
+            "url": "https://api.github.com/repos/giggsey/Locale/zipball/e6eb1883c1452df7734a03fb183a2ec5175c16f2",
+            "reference": "e6eb1883c1452df7734a03fb183a2ec5175c16f2",
             "shasum": ""
         },
         "require": {
@@ -67,7 +67,7 @@
             "symfony/finder": "^2.8|^3.0",
             "symfony/process": "^2.8|^3.0"
         },
-        "time": "2017-03-21 16:08:07",
+        "time": "2017-04-07 18:45:42",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -90,17 +90,17 @@
     },
     {
         "name": "giggsey/libphonenumber-for-php",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "8.6.0",
+        "version_normalized": "8.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-            "reference": "0613731935f03a799c28c5313fb647109a56d2be"
+            "reference": "0aba3105c1896412a8c6454a5c7843115c1dce7b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/0613731935f03a799c28c5313fb647109a56d2be",
-            "reference": "0613731935f03a799c28c5313fb647109a56d2be",
+            "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/0aba3105c1896412a8c6454a5c7843115c1dce7b",
+            "reference": "0aba3105c1896412a8c6454a5c7843115c1dce7b",
             "shasum": ""
         },
         "require": {
@@ -117,14 +117,14 @@
             "satooshi/php-coveralls": "^1.0",
             "symfony/console": "^2.8|^3.0"
         },
-        "time": "2017-03-28 19:11:25",
+        "time": "2017-07-04 16:24:53",
         "type": "library",
         "extra": {
             "branch-alias": {
                 "dev-master": "8.x-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "libphonenumber\\": "src/"

@@ -10,8 +10,8 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
     /**
      * @var Spryng_Payment_Helper_Data
      */
-    protected $spryngHelper;
-    protected $additionalData;
+    public $spryngHelper;
+    public $additionalData;
 
     protected $_code = 'spryng_general';
     protected $_isGateway = true;
@@ -222,8 +222,13 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
      */
     public function loadSpryngApi($apiKey, $storeId)
     {
+        if (!$path = $this->spryngHelper->getAutoloadPath()) {
+           $this->spryngHelper->addTolog('error', 'Spryng API not installed!');
+           return '';
+        }
+
         try {
-            require_once(Mage::getBaseDir('lib') . DS . 'spryng' . DS . 'autoload.php');
+            require_once($path);
             $spryngApi = new \SpryngPaymentsApiPhp\Client($apiKey, $this->spryngHelper->isSandbox($storeId));
         } catch (\Exception $e) {
             $this->spryngHelper->addTolog('error', 'Function: loadSpryngApi: ' . $e->getMessage());
@@ -295,7 +300,12 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
 
         $apiKey = $this->spryngHelper->getApiKey($storeId, $websiteId);
         if (empty($apiKey)) {
-            return array('-1' => $this->spryngHelper->__('Please provide a valid API Key first.'));
+            return array('-1' => $this->spryngHelper->__('Please provide a valid API Key.'));
+        }
+
+        $path = $this->spryngHelper->getAutoloadPath();
+        if (empty($path)) {
+            return array('-1' => $this->spryngHelper->__('Spryng API not installed correctly.'));
         }
 
         try {
@@ -325,7 +335,12 @@ class Spryng_Payment_Model_Spryng extends Mage_Payment_Model_Method_Abstract
 
         $apiKey = $this->spryngHelper->getApiKey($storeId, $websiteId);
         if (empty($apiKey)) {
-            return array('-1' => $this->spryngHelper->__('Please provide a valid API Key first.'));
+            return array('-1' => $this->spryngHelper->__('Please provide a valid API Key.'));
+        }
+
+        $path = $this->spryngHelper->getAutoloadPath();
+        if (empty($path)) {
+            return array('-1' => $this->spryngHelper->__('Spryng API not installed correctly.'));
         }
 
         try {

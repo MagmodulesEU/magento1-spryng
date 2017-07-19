@@ -6,7 +6,7 @@
 <config>
     <modules>
         <Spryng_Payment>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Spryng_Payment>
     </modules>
     <global>
